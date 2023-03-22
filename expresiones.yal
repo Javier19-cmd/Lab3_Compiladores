@@ -1,0 +1,19 @@
+(* expresiones.yal *) 
+        { 
+        import myToken
+
+        (*Creando una expresión regular de la forma a *)
+            let a = (myToken.createToken "a" "a")
+      
+        (*Creando una expresión regular de la forma b *)
+            let b = (myToken.createToken "b" "b")
+
+        (* Creando una expresión regular de la forma a|b *)
+
+            let aOrb = (myToken.createToken "a|b" "a|b")
+
+        (* Creando una expresión regular de la forma a* *)
+
+            let aStar = (myToken.createToken "a*" "a*")
+
+        }

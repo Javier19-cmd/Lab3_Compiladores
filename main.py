@@ -3,7 +3,6 @@ from Thompson import thompson, grafo, alfabeto, simular
 from Errores import *
 from AFD_Converter import *
 from SintaxT import *
-import re
 
 inp = input("Ingrese la expresion regular: ")
 

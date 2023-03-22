@@ -1,0 +1,7 @@
+// AFD
+digraph {
+	graph [rankdir=LR]
+	title [label=AFD shape=none]
+	0 -> 0 [label=a]
+	0 [label=0 shape=doublecircle]
+}

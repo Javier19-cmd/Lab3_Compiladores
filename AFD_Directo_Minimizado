@@ -1,0 +1,7 @@
+// AFD_Directo_Minimizado
+digraph {
+	graph [rankdir=LR]
+	title [label="AFD Minimizado" shape=none]
+	1 -> 1 [label=a]
+	1 [label=1 shape=doublecircle]
+}
