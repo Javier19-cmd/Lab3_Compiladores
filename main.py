@@ -4,6 +4,11 @@ from Errores import *
 from AFD_Converter import *
 from SintaxT import *
 
+# Abriendo el archivo expresiones.yal para leer su contenido.
+with open("expresiones.yal", "r") as file:
+    data = file.read()
+    print(data)
+
 inp = input("Ingrese la expresion regular: ")
 
 
