@@ -1,19 +1,24 @@
-(* expresiones.yal *) 
-        { 
-        import myToken
+(* La sección {header} es opcional *)
 
-        (*Creando una expresión regular de la forma a *)
-            let a = (myToken.createToken "a" "a")
-      
-        (*Creando una expresión regular de la forma b *)
-            let b = (myToken.createToken "b" "b")
+(* Definiendo las expresiones regulares que se usarán en este archivo *)
 
-        (* Creando una expresión regular de la forma a|b *)
+let ident1 = [a|b] 
 
-            let aOrb = (myToken.createToken "a|b" "a|b")
+let ident2 = [a|b|c]
 
-        (* Creando una expresión regular de la forma a* *)
+let ident3 = [a*]
 
-            let aStar = (myToken.createToken "a*" "a*")
+let ident4 = [a*|b*]
 
-        }
+(* Definiendo los entrypoints *)
+rule entrypoint [ident1, ident2, ident3, ident4] = 
+    (* Creando una acción para el ident1 *)
+    ident1 {return ident1}
+    (* Creando una acción para el ident2 *)
+    | ident2 {return ident2}
+    (* Creando una acción para el ident3 *)
+    | ident3 {return ident3}
+    (* Creando una acción para el ident4 *)
+    | ident4 {return ident4}
+
+(* La sección de {trailer} es opcional *)
