@@ -3,11 +3,33 @@ from Thompson import thompson, grafo, alfabeto, simular
 from Errores import *
 from AFD_Converter import *
 from SintaxT import *
+import re
+
+expresiones_reg = []
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
 with open("expresiones.yal", "r") as file:
-    data = file.read()
-    print(data)
+    data = file.read() # Leyendo la data del archivo.
+    
+    print("Data: ", data)
+
+    # Expresión regular para encontrar las variables que se declaran con let.
+    regex_let = r"let (\w+) = (.*)"
+
+    # Encontrando las variables que se declaran con let.
+    variables = re.findall(regex_let, data)
+
+    print("Variables: ", variables)
+
+    # Almacenando el contenido de las variables.
+    expresiones_reg = [var[1] for var in variables]
+    
+    # Cambiando los [] por () en cada expresión regular de la lista de expresiones_reg.
+    for i in range(len(expresiones_reg)):
+        expresiones_reg[i] = expresiones_reg[i].replace("[", "(")
+        expresiones_reg[i] = expresiones_reg[i].replace("]", ")")
+    
+    print("Expresiones regulares: ", expresiones_reg)
 
 inp = input("Ingrese la expresion regular: ")
 
