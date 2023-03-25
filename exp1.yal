@@ -15,7 +15,7 @@ let digits = digit+
 let id = letter(letter|digits)*
 
 (* Quinto token: hacer un número *)
-let number = digits(.digits)?('E'['+''-']?digits)?
+let number = digits(digits)?('E'['-']?digits)?
 
 
 (* La sección de {trailer} es opcional *)

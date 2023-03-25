@@ -4,6 +4,7 @@ from Transiciones import *
 import matplotlib.pyplot as plt
 import networkx as nx
 import graphviz as gv
+from collections import OrderedDict
 
 def thompson(expresion_regular):
     """Convierte una expresión regular en un autómata utilizando el algoritmo de Thompson"""
@@ -481,3 +482,122 @@ def cerradura_epsilon(estados, diccionario):
                         stack.append(estado2)
     
     return resultado
+
+# Método para unir los AFNs resultantes.
+def union_AFNs(automatas, listas, diccionarios):
+    
+    # print("Automatas: ", automatas)
+    # print("Listas: ", listas)
+    # print("Diccionarios: ", diccionarios)
+
+    #dicts = {}
+
+    # # Guardando cada autómata con su lista y diccionario dentro del dicts.
+    # for automata, lista, diccionario in zip(automatas, listas, diccionarios):
+    #     dicts[automata] = [lista, diccionario]
+    
+    # print("Dicts: ", dicts)
+
+    # Creando el nuevo autómata.
+    # Creando un nuevo estado.
+
+    nuevo_estado = Estado(2000)
+
+    # Conectando el estado a cada estado inicial de los autómatas.
+    for automata in automatas:
+        #print("Automata: ", automata)
+        pass
+    
+    # Creando una nueva transición con el nuevo_estado y el estado inicial de cada autómata.
+    for automata in automatas:
+        nueva_transicion = Transiciones(nuevo_estado, 'ε', automata.estado_inicial)
+
+        #print("Nueva transición: ", nueva_transicion)
+
+        # Guardando la transición en la lista de transiciones que corresponde al índice del autómata.
+        for automata2, lista in zip(automatas, listas):
+            if automata == automata2:
+                lista.append(nueva_transicion)
+                # Colocando la nueva transición hasta el principio de la lista.
+                lista.insert(0, lista.pop())
+
+                for trans in lista:
+                    #print("Transición: ", trans)
+                    pass
+        
+        # Colocando la nueva transición en el diccionario que corresponde al índice del autómata.
+        for automata3, diccionario in zip(automatas, diccionarios):
+            if automata == automata3:
+                #print("Autómata: ", automata, "Autómata 3: ", automata3)
+
+                # Agregando el nuevo estado al diccionario.
+                diccionario[nuevo_estado] = []
+
+                # Agregando la nueva transición al diccionario.
+                diccionario[nuevo_estado].append(('ε', automata.estado_inicial))
+                
+                automata.estado_general = nuevo_estado
+
+                # print("Estado inicial: ", automata.estado_inicial)
+                # print("Estado final: ", automata.estado_final)
+                #print("Estado general: ", automata.estado_general)
+                
+    #print("Diccionarios: ", diccionarios)
+
+    # Graficando el primer diccionario.
+    grafo = gv.Digraph('G', filename='grafo', format='png')
+    
+    # Sacando el primer diccionario.
+    diccionario = diccionarios[0]
+
+    # Leyendo los estados de cada autómata y guardarlos en una lista de listas.
+    for key, value in diccionario.items():
+        print("Key: ", key)
+        print("Value: ", value)
+
+        # Leyendo las transiciones de cada estado.
+        for transicion in value:
+            grafo.node(str(key), str(key))
+            grafo.edge(str(key), str(transicion[1]), label=str(transicion[0]))
+        
+    # Colocando el autómta de manera horizontal.
+    grafo.graph_attr['rankdir'] = 'LR'
+    grafo.render('AFN', view=True)
+
+    # Colocando el autómta de manera horizontal.
+    grafo.graph_attr['rankdir'] = 'LR'
+
+    grafo.render('AFN', view=True)
+    
+
+
+    # Graficar el autómata.
+    # grafo = gv.Digraph('G', filename='grafo', format='png')
+
+    # grafo.node('title', 'AFN', shape='box', style='filled', color='lightblue')
+
+    # # Recorriendo la lista de diccionarios para poder agregar los nodos y sus transiciones.
+    # for diccionario in diccionarios:
+    #     # Leyendo los estados de cada autómata y guardarlos en una lista de listas.
+    #     for key, value in diccionario.items():
+    #         print("Key: ", key, "Value: ", value)
+
+    #         # Leyendo las transiciones de cada estado.
+    #         for transicion in value:
+    #             # Graficando los estados y sus transiciones.
+    #             grafo.node(str(key), str(key))
+
+    #             # Graficando las transiciones.
+    #             grafo.edge(str(key), str(transicion[1]), label=str(transicion[0]))
+
+                
+
+    # # Colocando el autómta de manera horizontal.
+    # grafo.graph_attr['rankdir'] = 'LR'
+    # grafo.render('AFN', view=True)
+
+
+    # # Colocando el autómta de manera horizontal.
+    # grafo.graph_attr['rankdir'] = 'LR'
+
+    # grafo.render('AFN', view=True)

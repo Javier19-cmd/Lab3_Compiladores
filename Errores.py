@@ -73,6 +73,8 @@ def deteccion(regex):
     #     print("Error: La expresión regular tiene errores combinados como -a+, o (a* o )a|) o )+a(")
     #     return False
 
+    # Si existe un + o un -, no pasa nada.
+
     return True
 
 def check_parenthesis(regex):

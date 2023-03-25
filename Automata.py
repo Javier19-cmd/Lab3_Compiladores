@@ -3,6 +3,7 @@ class Automata:
     def __init__(self, inicio, fin):
         self.estado_inicial = inicio
         self.estado_final = fin
+        self.estado_general = None
 
     # Devolver el estado inicial del autómata.
     def get_estado_inicial(self):
