@@ -1,0 +1,21 @@
+(* La sección {header} es opcional *)
+
+(* Definiendo los tokens a usar en este archivo *)
+
+(* Primer token: expresión regular que solo acepte letras *)
+let letter = ['a'-'z' 'A'-'Z']
+
+(* Segundo token: expresión regular que acepte números *)
+let digit = ['0'-'9']
+
+(* Tercer token: hacer un digito *)
+let digits = digit+
+
+(* Cuarto token: hacer un identificador *)
+let id = letter(letter|digits)*
+
+(* Quinto token: hacer un número *)
+let number = digits(.digits)?('E'['+''-']?digits)?
+
+
+(* La sección de {trailer} es opcional *)
