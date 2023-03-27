@@ -32,11 +32,11 @@ class SintaxT:
 
         self.construir() # Construyendo el árbol.
 
-        self.simularAFD() # Simulando el AFD.
+        #self.simularAFD() # Simulando el AFD.
 
         self.grafica() # Método para graficar.
 
-        self.minimizar() # Minimización.
+        #self.minimizar() # Minimización.
 
     def aumento(self): 
         # Paso 1 - Aumentar el árbol para obtener el AFD.
@@ -191,7 +191,7 @@ class SintaxT:
     def analisis(self, arbol): # Función para analizar el AFD.
         # Paso 3 - Analizar el AFD.
 
-        #print("Árbol: ", arbol)
+        print("Árbol: ", arbol)
 
         diccionario = {} # Diccionario del árbol.
 
@@ -536,7 +536,7 @@ class SintaxT:
                 grafo.node(str(esta), str(esta), shape="circle")
         
         # Colocando el autómta de manera horizontal.
-        grafo.graph_attr['rankdir'] = 'LR'
+        #grafo.graph_attr['rankdir'] = 'LR'
 
         grafo.render('AFD_Directo', view=True) # Dibujando el grafo.        
         

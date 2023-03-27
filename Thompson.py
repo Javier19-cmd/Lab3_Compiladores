@@ -512,7 +512,7 @@ def union_AFNs(automatas, listas, diccionarios):
     for automata in automatas:
         nueva_transicion = Transiciones(nuevo_estado, 'ε', automata.estado_inicial)
 
-        #print("Nueva transición: ", nueva_transicion)
+        print("Nueva transición: ", nueva_transicion)
 
         # Guardando la transición en la lista de transiciones que corresponde al índice del autómata.
         for automata2, lista in zip(automatas, listas):
@@ -541,63 +541,35 @@ def union_AFNs(automatas, listas, diccionarios):
                 # print("Estado inicial: ", automata.estado_inicial)
                 # print("Estado final: ", automata.estado_final)
                 #print("Estado general: ", automata.estado_general)
-                
-    #print("Diccionarios: ", diccionarios)
-
+                    
     # Graficando el primer diccionario.
     grafo = gv.Digraph('G', filename='grafo', format='png')
-    
-    # Sacando el primer diccionario.
-    diccionario = diccionarios[0]
 
-    # Leyendo los estados de cada autómata y guardarlos en una lista de listas.
-    for key, value in diccionario.items():
-        print("Key: ", key)
-        print("Value: ", value)
-
-        # Leyendo las transiciones de cada estado.
-        for transicion in value:
-            grafo.node(str(key), str(key))
-            grafo.edge(str(key), str(transicion[1]), label=str(transicion[0]))
+    # Recorriendo la lista de diccionarios.
+    for i, diccionario in enumerate(diccionarios):
         
-    # Colocando el autómta de manera horizontal.
-    grafo.graph_attr['rankdir'] = 'LR'
-    grafo.render('AFN', view=True)
+        # Crear un subgrafo para cada grafo en la lista.
+        with grafo.subgraph(name=f'cluster_{i}') as subgraph:
+            subgraph.attr(label=f'Grafo {i+1}')
 
+            # Recorrer las claves y valores de cada diccionario.
+            for key, value in diccionario.items():
+
+                # Agregar el nodo al subgrafo.
+                subgraph.node(str(key), str(key))
+            
+                # Pintando de color verde el estado inicial.
+                if key == nuevo_estado:
+                    subgraph.node(str(key), style='filled', color='green')
+
+                # Leer las transiciones de cada estado.
+                for transicion in value:
+                    # Agregar la arista al subgrafo.
+                    subgraph.edge(str(key), str(transicion[1]), label=str(transicion[0]))
+
+    
     # Colocando el autómta de manera horizontal.
     grafo.graph_attr['rankdir'] = 'LR'
 
     grafo.render('AFN', view=True)
     
-
-
-    # Graficar el autómata.
-    # grafo = gv.Digraph('G', filename='grafo', format='png')
-
-    # grafo.node('title', 'AFN', shape='box', style='filled', color='lightblue')
-
-    # # Recorriendo la lista de diccionarios para poder agregar los nodos y sus transiciones.
-    # for diccionario in diccionarios:
-    #     # Leyendo los estados de cada autómata y guardarlos en una lista de listas.
-    #     for key, value in diccionario.items():
-    #         print("Key: ", key, "Value: ", value)
-
-    #         # Leyendo las transiciones de cada estado.
-    #         for transicion in value:
-    #             # Graficando los estados y sus transiciones.
-    #             grafo.node(str(key), str(key))
-
-    #             # Graficando las transiciones.
-    #             grafo.edge(str(key), str(transicion[1]), label=str(transicion[0]))
-
-                
-
-    # # Colocando el autómta de manera horizontal.
-    # grafo.graph_attr['rankdir'] = 'LR'
-    # grafo.render('AFN', view=True)
-
-
-    # # Colocando el autómta de manera horizontal.
-    # grafo.graph_attr['rankdir'] = 'LR'
-
-    # grafo.render('AFN', view=True)

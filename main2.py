@@ -4,7 +4,6 @@ from Errores import *
 from AFD_Converter import *
 from SintaxT import *
 import re
-from prettytable import PrettyTable
 from reg import evaluar
 
 tabla = {}
@@ -90,88 +89,109 @@ with open("exp1.yal", "r") as file:
     for key in tabla:
         tabla[key] = tabla[key].replace("[", "(")
         tabla[key] = tabla[key].replace("]", ")")
-    
-    #print("Tabla: ", tabla)
 
-    # # Creando la tabla.
-    # table = PrettyTable()
-    # table.field_names = ["Variable", "Expresión regular"]
-
-    # # Agregando los datos a la tabla.
-    # for key in tabla:
-    #     table.add_row([key, tabla[key]])
-    
-    # # Imprimiendo la tabla.
-    # print(table)
-
-    #print("Tabla: ", tabla)
 
     # Metiendo a una lista los valores del diccionario.
-    lista = []
+    listaA = []
 
     listaF = []
 
     for key in tabla:
-        lista.append(tabla[key])
+        listaA.append(tabla[key])
     
     #print("Lista: ", lista)
 
-    # Sacando cada regex para analizarla.
-    for regex in lista:
-        #print("Regex: ", regex)
-        # Cambiando el ? por un |ε.
-        regex = regex.replace("?", "|ε")
+    # # Sacando cada regex para analizarla.
+    # for regex in listaA:
+    #     #print("Regex: ", regex)
+    #     # Cambiando el ? por un |ε.
+    #     regex = regex.replace("?", "|ε")
 
-        # Simplificando los *.
-        if "*" in regex:
-            regex = regex.replace("*****************", "*")
-            regex = regex.replace("****************", "*")
-            regex = regex.replace("***************", "*")
-            regex = regex.replace("**************", "*")
-            regex = regex.replace("************", "*")
-            regex = regex.replace("**********", "*")
-            regex = regex.replace("********", "*")
-            regex = regex.replace("******", "*")
-            regex = regex.replace("*****", "*")
-            regex = regex.replace("****", "*")
-            regex = regex.replace("***", "*")
-            regex = regex.replace("**", "*")
+    #     # Simplificando los *.
+    #     if "*" in regex:
+    #         regex = regex.replace("*****************", "*")
+    #         regex = regex.replace("****************", "*")
+    #         regex = regex.replace("***************", "*")
+    #         regex = regex.replace("**************", "*")
+    #         regex = regex.replace("************", "*")
+    #         regex = regex.replace("**********", "*")
+    #         regex = regex.replace("********", "*")
+    #         regex = regex.replace("******", "*")
+    #         regex = regex.replace("*****", "*")
+    #         regex = regex.replace("****", "*")
+    #         regex = regex.replace("***", "*")
+    #         regex = regex.replace("**", "*")
 
-        #print("Regex: ", regex)
+    #     #print("Regex: ", regex)
 
-        # Quitando las comillas de los caracteres.
-        regex = regex.replace("'", "")
+    #     # Quitando las comillas de los caracteres.
+    #     regex = regex.replace("'", "")
 
-        # # Haciendo el grafo.
-        # grafo(automata, lista, diccionario)
+    #     # # Haciendo el grafo.
+    #     # grafo(automata, lista, diccionario)
 
-        # Pasando a postfix.
-        reg = evaluar(regex)
+    #     # Pasando a postfix.
+    #     reg = evaluar(regex)
 
-        #print("Regex: ", regex)
+    #     #print("Regex: ", regex)
 
-        listaF.append(reg)
+    #     listaF.append(reg)
 
-    #print("ListaF: ", listaF)
+    # #print("ListaF: ", listaF)
 
-    # Definiendo las listas para mandarlas a la unión de los AFNs.
-    automatasAFN = []
-    listasAFN = []
-    diccionariosAFN = []
+    # # Definiendo las listas para mandarlas a la unión de los AFNs.
+    # automatasAFN = []
+    # listasAFN = []
+    # diccionariosAFN = []
 
-    # Por cada autómata de la listaF hacer un AFN.
-    for res in listaF:
-        print("Regex: ", res)
+    # # Por cada autómata de la listaF hacer un AFN.
+    # for res in listaF:
+    #     #print("Regex: ", res)
 
+    #     # # Creando el AFN.
+    #     automata, lista, diccionario = thompson(res)
 
-
-        # # Creando el AFN.
-        automata, lista, diccionario = thompson(res)
-
-        automatasAFN.append(automata)
-        listasAFN.append(lista)
-        diccionariosAFN.append(diccionario)
+    #     automatasAFN.append(automata)
+    #     listasAFN.append(lista)
+    #     diccionariosAFN.append(diccionario)
 
     
     # Uniendo los AFNs.
-    union_AFNs(automatasAFN, listasAFN, diccionariosAFN)
+    #union_AFNs(automatasAFN, listasAFN, diccionariosAFN)
+
+    #print("ListaA: ", listaA)
+
+    # print("ListaF: ", listaF)
+
+    regex_final = ""
+    alf_final = ""
+    lista_temp = []
+
+
+    for i in range(len(listaA)):
+        regex = listaA[i]
+        regex = regex.replace("?", "|ε")
+
+        if "*" in regex:
+            regex = regex.replace("*" * 11, "*")
+
+        regex = regex.replace("'", "")
+        listaA[i] = regex
+
+
+    #print("ListaA: ", listaA)
+
+    # Uniendo todas las expresiones mediante un |.
+    expr = "|".join(listaA)
+
+    #print("Expresión unida: ", expr)
+
+    # Pasando a postfix.
+    regex_final = evaluar(expr)
+
+    print("Expresión unida en postfix: ", regex_final)
+
+    # Obteniendo alfabeto.
+    alf_final = alfabeto(regex_final)
+
+    SintaxT(regex_final, alf_final)
