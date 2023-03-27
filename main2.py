@@ -70,6 +70,10 @@ with open("exp1.yal", "r") as file:
 
         tabla['id'] = tabla['id'].replace("letter", new_letters)
         tabla['id'] = tabla['id'].replace("digits", new_digitsp)
+
+        # Si existe un str, o sea un (_)*, colocarlo también.
+        if 'str' in tabla:
+            tabla['id'] = tabla['id'].replace("str", tabla['str'])
         
     #print("Tabla: ", tabla)
 
@@ -82,14 +86,13 @@ with open("exp1.yal", "r") as file:
         """
 
         tabla['number'] = tabla['number'].replace("digits", new_digitsp)
-    
-    #print("Tabla: ", tabla)
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
     for key in tabla:
         tabla[key] = tabla[key].replace("[", "(")
         tabla[key] = tabla[key].replace("]", ")")
 
+    print("Tabla: ", tabla) 
 
     # Metiendo a una lista los valores del diccionario.
     listaA = []
@@ -178,6 +181,25 @@ with open("exp1.yal", "r") as file:
         regex = regex.replace("'", "")
         listaA[i] = regex
 
+        # Verificando que la expresión esté bien.
+        bien = deteccion(regex)
+
+        if bien: 
+
+            # Obteniendo individualmente cada alfabeto.
+            alfI = alfabeto(regex)
+
+            # Pasando individualmente cada expresión a postfix.
+            regexI = evaluar(regex)
+
+            print("RegexI: ", regexI)
+
+            # Creando el AFD.
+            SintaxT(regexI, alfI)
+        
+        else: 
+            print("Hubo un error con la regex")
+
 
     #print("ListaA: ", listaA)
 
@@ -186,12 +208,20 @@ with open("exp1.yal", "r") as file:
 
     #print("Expresión unida: ", expr)
 
-    # Pasando a postfix.
-    regex_final = evaluar(expr)
+    # Verificando que la expresión regular no tenga errores.
+    bien = deteccion(expr)
 
-    print("Expresión unida en postfix: ", regex_final)
+    if bien:
+    
+        # Pasando a postfix.
+        regex_final = evaluar(expr)
 
-    # Obteniendo alfabeto.
-    alf_final = alfabeto(regex_final)
+        print("Expresión unida en postfix: ", regex_final)
 
-    SintaxT(regex_final, alf_final)
+        # Obteniendo alfabeto.
+        alf_final = alfabeto(regex_final)
+
+        SintaxT(regex_final, alf_final)
+    
+    else: 
+        print("Hubo un error con la regex")
