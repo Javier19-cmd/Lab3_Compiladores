@@ -4,7 +4,6 @@ from Errores import *
 from AFD_Converter import *
 from SintaxT import *
 import re
-from reg import evaluar
 
 tabla = {}
 
@@ -80,19 +79,28 @@ with open("exp1.yal", "r") as file:
     # Verificando si hay una definición de number.
     if 'number' in tabla:
         new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
+        new_signs = "@|~"
         """
             El reemplazo sería:
             digits se cambia por new_digitsp.
         """
 
         tabla['number'] = tabla['number'].replace("digits", new_digitsp)
+        tabla['number'] = tabla['number'].replace("sign", new_signs)
+    
+    if 'sign' in tabla: 
+        new_signs = "@|~"
+        tabla['sign'] = tabla['sign'].replace("['+'|'-']", new_signs)
+
+    
+    # print("Tabla: ", tabla)
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
     for key in tabla:
         tabla[key] = tabla[key].replace("[", "(")
         tabla[key] = tabla[key].replace("]", ")")
 
-    print("Tabla: ", tabla) 
+    print("Tabla: ", tabla)
 
     # Metiendo a una lista los valores del diccionario.
     listaA = []
@@ -176,7 +184,18 @@ with open("exp1.yal", "r") as file:
         regex = regex.replace("?", "|ε")
 
         if "*" in regex:
-            regex = regex.replace("*" * 11, "*")
+            regex = regex.replace("*****************", "*")
+            regex = regex.replace("****************", "*")
+            regex = regex.replace("***************", "*")
+            regex = regex.replace("**************", "*")
+            regex = regex.replace("************", "*")
+            regex = regex.replace("**********", "*")
+            regex = regex.replace("********", "*")
+            regex = regex.replace("******", "*")
+            regex = regex.replace("*****", "*")
+            regex = regex.replace("****", "*")
+            regex = regex.replace("***", "*")
+            regex = regex.replace("**", "*")
 
         regex = regex.replace("'", "")
         listaA[i] = regex
@@ -192,10 +211,10 @@ with open("exp1.yal", "r") as file:
             # Pasando individualmente cada expresión a postfix.
             regexI = evaluar(regex)
 
-            print("RegexI: ", regexI)
+            #print("RegexI: ", regexI)
 
             # Creando el AFD.
-            SintaxT(regexI, alfI)
+            #SintaxT(regexI, alfI)
         
         else: 
             print("Hubo un error con la regex")

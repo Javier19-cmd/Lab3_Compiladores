@@ -14,8 +14,10 @@ let digits = digit+
 (* Cuarto token: hacer un identificador *)
 let id = letter(letter|digits)*
 
-(* Quinto token: hacer un número *)
-let number = digits(,digits)?('E'['-']?digits)?
+(* Quinto token: hacer los signos *)
+let sign = ['+'|'-']
 
+(* Quinto token: hacer un número *)
+let number = digits(,digits)?('E'[sign]?digits)?
 
 (* La sección de {trailer} es opcional *)

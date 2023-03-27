@@ -96,6 +96,22 @@ class SintaxT:
                 stack.append(nodo2)
 
                 resultado.append(nodo2)
+            
+            elif c == "@": # Signo para la suma.
+
+                nodoo = NodoA(etiqueta="+")
+
+                stack.append(nodoo)
+
+                resultado.append(nodoo)
+            
+            elif c == "~": # Signo para la resta.
+
+                nodoo = NodoA(etiqueta="-")
+
+                stack.append(nodoo)
+
+                resultado.append(nodoo)
 
             elif c == "|":
 
