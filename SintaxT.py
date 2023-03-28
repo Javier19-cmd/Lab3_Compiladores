@@ -69,6 +69,9 @@ class SintaxT:
 
         operaciones = ["|", ".", "*"]
 
+        # Operadores especiales.
+        operadores_esp = ["+", "@", "≡", "¥", "§"]
+
         for c in self.regex:
 
             if c not in operaciones: # Carateres del regex.
@@ -99,6 +102,8 @@ class SintaxT:
             
             elif c == "@": # Signo para la suma.
 
+                print("Suma")
+
                 nodoo = NodoA(etiqueta="+")
 
                 stack.append(nodoo)
@@ -112,6 +117,23 @@ class SintaxT:
                 stack.append(nodoo)
 
                 resultado.append(nodoo)
+            
+            elif c == "≡": # Espacio vacío.
+                nods = NodoA(etiqueta="≡")
+
+                stack.append(nods)
+                resultado.append(nods)
+
+            elif c == "¥": # \t
+
+                nod = NodoA(etiqueta="¥")
+
+                stack.append(nod)
+                resultado.append(nod)
+            
+            elif c == "§": # \n
+
+                no = NodoA(etiqueta="§")
 
             elif c == "|":
 

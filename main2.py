@@ -96,7 +96,7 @@ with open("exp1.yal", "r") as file:
     # Leyendo el delim.
     if 'delim' in tabla:
 
-        print("Hay un delim")
+        #print("Hay un delim")
 
         new_delims = "≡|¥|§"
         tabla['delim'] = tabla['delim'].replace("[' ''\\t''\\n']", new_delims)
@@ -251,7 +251,7 @@ with open("exp1.yal", "r") as file:
         # Pasando a postfix.
         regex_final = evaluar(expr)
 
-        print("Expresión unida en postfix: ", regex_final)
+        #print("Expresión unida en postfix: ", regex_final)
 
         # Obteniendo alfabeto.
         alf_final = alfabeto(regex_final)
