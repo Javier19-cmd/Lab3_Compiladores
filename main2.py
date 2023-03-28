@@ -93,6 +93,22 @@ with open("exp1.yal", "r") as file:
         tabla['sign'] = tabla['sign'].replace("['+'|'-']", new_signs)
 
     
+    # Leyendo el delim.
+    if 'delim' in tabla:
+
+        print("Hay un delim")
+
+        new_delims = "≡|¥|§"
+        tabla['delim'] = tabla['delim'].replace("[' ''\\t''\\n']", new_delims)
+    
+    if 'ws' in tabla: 
+        new_delims = "≡|¥|§"
+        tabla['ws'] = tabla['ws'].replace("delim", new_delims)
+
+        # Verificando como está el delim.
+        # Si el delim está así [' ''\t''\n'], crear un or entre ellos.
+
+
     # print("Tabla: ", tabla)
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.

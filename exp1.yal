@@ -2,6 +2,10 @@
 
 (* Definiendo los tokens a usar en este archivo *)
 
+(* Definiendo el break de línea *)
+let delim = [' ''\t''\n']
+let ws = delim+
+
 (* Primer token: expresión regular que solo acepte letras *)
 let letter = ['a'-'z' 'A'-'Z']
 
