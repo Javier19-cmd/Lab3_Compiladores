@@ -42,8 +42,6 @@ class SintaxT:
         # Paso 1 - Aumentar el árbol para obtener el AFD.
 
         self.regex = self.regex + "#."
-        
-
     # Función anulable para cada nodo el árbol.
     def anulable(self, regex):
         if regex.etiqueta == "ε":
@@ -555,15 +553,15 @@ class SintaxT:
                 else:
 
                     # Cambiando algunos labels.
-                    if a == "@":
+                    if a == "@": # Símbolo de suma.
                         a = "+"
-                    if a == '~':
+                    if a == '~': # Símbolo de resta.
                         a = "-"
-                    if a == "≡":
+                    if a == "≡": # Símbolo de " ".
                         a = "bb"
-                    if a == "¥":
+                    if a == "¥": # Símbolo de \t.
                         a = "\yt"
-                    if a == "§":
+                    if a == "§": # Símbolo de \n.
                         a = "\yn"
 
                     grafo.edge(str(estado), str(trans), label=a)
