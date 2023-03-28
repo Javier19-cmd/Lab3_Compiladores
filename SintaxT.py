@@ -69,9 +69,6 @@ class SintaxT:
 
         operaciones = ["|", ".", "*"]
 
-        # Operadores especiales.
-        operadores_esp = ["+", "@", "≡", "¥", "§"]
-
         for c in self.regex:
 
             if c not in operaciones: # Carateres del regex.
@@ -79,7 +76,6 @@ class SintaxT:
                 nodo1 = NodoA(etiqueta=c)
 
                 #print("Nodo creado: ", nodo1, "Caracter: ", nodo1.etiqueta)
-
                 stack.append(nodo1)
 
                 resultado.append(nodo1)
@@ -551,12 +547,25 @@ class SintaxT:
             for a in self.alfabeth:
                 
                 trans = estado.transitions[a]
-                # print("Estado: ", estado, "Trans: ", trans)
+                #print("Estado: ", estado, "Trans: ", trans)
 
                 # Eliminar las transiciones vacías.
                 if trans == {}:
                     continue
                 else:
+
+                    # Cambiando algunos labels.
+                    if a == "@":
+                        a = "+"
+                    if a == '~':
+                        a = "-"
+                    if a == "≡":
+                        a = "bb"
+                    if a == "¥":
+                        a = "\yt"
+                    if a == "§":
+                        a = "\yn"
+
                     grafo.edge(str(estado), str(trans), label=a)
 
         # Dibujando los estados del AFD.
