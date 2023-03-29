@@ -8,7 +8,7 @@ import re
 tabla = {}
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("exp1.yal", "r") as file:
+with open("exp3.yal", "r") as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
