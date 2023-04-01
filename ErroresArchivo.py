@@ -18,5 +18,19 @@ def deteccion2(regex):
     if not coin: 
         print("Error: La expresión regular no tiene letras o números.")
         return False, regex
+
+    # Verificando que la expresión no tenga un * o un + al inicio.
+    coincidencia = re.match(r"^(?![*+]).*", regex)
+
+    if not coincidencia:
+        print("Error: La expresión regular no puede empezar con un * o un +.")
+        return "BB", regex
+    
+    # Verificando que la expresión no tenga un | hasta el final.
+    coincidencia = re.match(r".*(?<!\|)$", regex)
+
+    if not coincidencia:
+        print("Error: La expresión regular no puede tener un | suelto.")
+        return "OF", regex
     
     return True, regex

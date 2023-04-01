@@ -40,6 +40,14 @@ with open("exp3.yal", "r") as file:
             #print("Línea: ", data.find(expres))
             print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " hay paréntesis desbalanceados en la regex")
         
+        if bool == "BB":
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " la regex empieza con un * o un +.")
+        
+        if bool == "OF":
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " la regex finaliza con un |.")
+        
+
+
         # Revisando que las declaraciones de variables estén bien escritas.
 
         # Imprimiendo las declaraciones.
@@ -59,6 +67,13 @@ with open("exp3.yal", "r") as file:
         
         if bool == False: 
             print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " la variable solo debe tener letras o números")
+        
+        if bool == "BB":
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " la regex empieza con un * o un +.")
+        
+        if bool == "OF":
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " la regex finaliza con un |.")
+        
 
     # Almacenando el nombre de las variables y su expresión regular en la tabla.
     for variable in variables:
