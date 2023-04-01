@@ -3,6 +3,7 @@ from Thompson import *
 from Errores import *
 from AFD_Converter import *
 from SintaxT import *
+from ErroresArchivo import *
 import re
 
 tabla = {}
@@ -20,12 +21,50 @@ with open("exp3.yal", "r") as file:
     variables = re.findall(regex_let, data)
 
     #print("Variables: ", variables)
+    for var in variables: 
+        #print("Variable: ", var[0], "Expresión regular: ", var[1])
+
+        # Analizando cada expresión regular para ver que sea consistente.
+        bool, expres = deteccion2(var[1])
+
+        # Buscando en que línea del archivo está la regex que pudo tener error.
+        if bool == "Corchetes": 
+            #print("Expresión regular: ", expres)
+            #print("Línea: ", data.find(expres))
+            # Imprimiendo también la posición del error.
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " hay corchetes desbalanceados en la regex")
+            
+        
+        if bool == "Parent":
+            #print("Expresión regular: ", expres)
+            #print("Línea: ", data.find(expres))
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " hay paréntesis desbalanceados en la regex")
+        
+        # Revisando que las declaraciones de variables estén bien escritas.
+
+        # Imprimiendo las declaraciones.
+        print(var[0])
+
+        bool, expres = deteccion2(var[0])
+        
+        if bool == "Corchetes":
+            #print("Expresión regular: ", expres)
+            #print("Línea: ", data.find(expres))
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " hay corchetes desbalanceados en la variable")
+        
+        if bool == "Parent":
+            #print("Expresión regular: ", expres)
+            #print("Línea: ", data.find(expres))
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " hay paréntesis desbalanceados en la variable")
+        
+        if bool == False: 
+            print("Error en la línea: ", data.count('\n', 0, data.find(expres)), " la variable solo debe tener letras o números")
 
     # Almacenando el nombre de las variables y su expresión regular en la tabla.
     for variable in variables:
         tabla[variable[0]] = variable[1]
     
-    #print("Tabla: ", tabla)
+    #print("Tabla al principio: ", tabla)
     
     # Reemplazando el E por un epsilon.
     for key in tabla:
@@ -109,14 +148,12 @@ with open("exp3.yal", "r") as file:
         # Si el delim está así [' ''\t''\n'], crear un or entre ellos.
 
 
-    # print("Tabla: ", tabla)
-
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
     for key in tabla:
         tabla[key] = tabla[key].replace("[", "(")
         tabla[key] = tabla[key].replace("]", ")")
 
-    print("Tabla: ", tabla)
+    #print("Tabla: ", tabla)
 
     # Metiendo a una lista los valores del diccionario.
     listaA = []
@@ -229,8 +266,8 @@ with open("exp3.yal", "r") as file:
 
             #print("RegexI: ", regexI)
 
-            # Creando el AFD.
-            #SintaxT(regexI, alfI)
+            # Creando el AFD temporal.
+            SintaxT(regexI, alfI)
         
         else: 
             print("Hubo un error con la regex")

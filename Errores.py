@@ -37,47 +37,11 @@ def deteccion(regex):
     if not coincidencia:
         print("Error: La expresión regular no puede tener un | suelto.")
         return False
-    
-    # # Verificando que la expresión tenga los paréntesis de apertura y cierre correctos.
-
-
-    # if parent == 0:
-    #     print("Error: La expresión no tiene consistencia en sus paréntesis.")
-    #     return False
-
-    # coincidenci = re.match(r"^(?![*+]).*", regex)
-
-    # if not coincidenci:
-    #     print("Error: La expresión no tiene consistencia en sus paréntesis.")
-    #     return False
-    
-    # Verificando que la expresión no tenga un * o un + al final.
-
-    # # Verificando que no hayan operadores diferentes a +, |, ., ?, *.
-    # coincidencia = re.match(r"[a-zA-Z0-9ε*+|?.]*", regex)
-
-    # if coincidencia:
-    #     print("Error: La expresión regular tiene operadores diferentes a +, |, ., ?, *.")
-    #     return False
-    
-    # # Verificando que no hayan letras o números diferentes a a-z, A-Z, 0-9.
-    # coincidencia = re.match(r"[a-zA-Z0-9ε*+|?.]*", regex)
-    # if coincidencia:
-    #     print("Error: La expresión regular tiene letras o números diferentes a a-z, A-Z, 0-9.")
-    #     return False
-    
-    # # Verificando si hay errores combinados como -a+, o (a* o )a|) o )+a(
-    # coincidencia = re.match(r"^[a-zA-Z0-9ε*+|?.]*$", regex) 
-
-    # if not coincidencia:
-    #     print("Error: La expresión regular tiene errores combinados como -a+, o (a* o )a|) o )+a(")
-    #     return False
 
     # Si existe un -, no pasa nada.
     if re.search("\-", regex):
         print("Expresión regular válida.")
         return True
-
 
     return True
 
