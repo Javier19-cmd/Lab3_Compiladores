@@ -9,7 +9,7 @@ import re
 tabla = {}
 
 # Abriendo el archivo expresiones.yal para leer su contenido.
-with open("exp3.yal", "r") as file:
+with open("exp3.yal", "r", encoding='utf-8') as file:
     data = file.read() # Leyendo la data del archivo.
     
     #print("Data: ", data)
@@ -105,7 +105,7 @@ with open("exp3.yal", "r") as file:
     
     # Verificando si hay una definición de digit+
     if 'digits' in tabla:
-        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
+        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
         tabla['digits'] = tabla['digits'].replace("digit+", new_digitsp)
     
     #print("Tabla: ", tabla)
@@ -113,9 +113,9 @@ with open("exp3.yal", "r") as file:
     # Verificando si hay una definición id.
     if 'id' in tabla:
         new_letters = '(a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z|A|B|C|D|E|F|G|H|I|J|K|L|M|N|O|P|Q|R|S|T|U|V|W|X|Y|Z)'
-        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
+        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
         """
-            El reemplazo sería: 
+            El reemplazo sería:
             id = letter (letter | digit)*
             en donde letter se cambia por new1_letters 
             y digits por new1_digitsp
@@ -132,8 +132,8 @@ with open("exp3.yal", "r") as file:
 
     # Verificando si hay una definición de number.
     if 'number' in tabla:
-        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)+'
-        new_signs = "@|~"
+        new_digitsp = '(0|1|2|3|4|5|6|7|8|9)(0|1|2|3|4|5|6|7|8|9)*'
+        new_signs = "(@|~)"
         """
             El reemplazo sería:
             digits se cambia por new_digitsp.
@@ -143,7 +143,7 @@ with open("exp3.yal", "r") as file:
         tabla['number'] = tabla['number'].replace("sign", new_signs)
     
     if 'sign' in tabla: 
-        new_signs = "@|~"
+        new_signs = "(@|~)"
         tabla['sign'] = tabla['sign'].replace("['+'|'-']", new_signs)
 
     
@@ -152,15 +152,17 @@ with open("exp3.yal", "r") as file:
 
         #print("Hay un delim")
 
-        new_delims = "≡|¥|§"
+        new_delims = "(≡|¥|§)"
         tabla['delim'] = tabla['delim'].replace("[' ''\\t''\\n']", new_delims)
     
     if 'ws' in tabla: 
-        new_delims = "≡|¥|§"
-        tabla['ws'] = tabla['ws'].replace("delim", new_delims)
+        new_delimsp = "(≡|¥|§)(≡|¥|§)*"
+        tabla['ws'] = tabla['ws'].replace("delim+", new_delimsp)
 
         # Verificando como está el delim.
         # Si el delim está así [' ''\t''\n'], crear un or entre ellos.
+        # Verificando si se hizo el cambio.
+        #print("Tabla: ", tabla)
 
 
     # Verificando si existen corchetes para reemplazarlos con paréntesis.
@@ -179,69 +181,6 @@ with open("exp3.yal", "r") as file:
         listaA.append(tabla[key])
     
     #print("Lista: ", lista)
-
-    # # Sacando cada regex para analizarla.
-    # for regex in listaA:
-    #     #print("Regex: ", regex)
-    #     # Cambiando el ? por un |ε.
-    #     regex = regex.replace("?", "|ε")
-
-    #     # Simplificando los *.
-    #     if "*" in regex:
-    #         regex = regex.replace("*****************", "*")
-    #         regex = regex.replace("****************", "*")
-    #         regex = regex.replace("***************", "*")
-    #         regex = regex.replace("**************", "*")
-    #         regex = regex.replace("************", "*")
-    #         regex = regex.replace("**********", "*")
-    #         regex = regex.replace("********", "*")
-    #         regex = regex.replace("******", "*")
-    #         regex = regex.replace("*****", "*")
-    #         regex = regex.replace("****", "*")
-    #         regex = regex.replace("***", "*")
-    #         regex = regex.replace("**", "*")
-
-    #     #print("Regex: ", regex)
-
-    #     # Quitando las comillas de los caracteres.
-    #     regex = regex.replace("'", "")
-
-    #     # # Haciendo el grafo.
-    #     # grafo(automata, lista, diccionario)
-
-    #     # Pasando a postfix.
-    #     reg = evaluar(regex)
-
-    #     #print("Regex: ", regex)
-
-    #     listaF.append(reg)
-
-    # #print("ListaF: ", listaF)
-
-    # # Definiendo las listas para mandarlas a la unión de los AFNs.
-    # automatasAFN = []
-    # listasAFN = []
-    # diccionariosAFN = []
-
-    # # Por cada autómata de la listaF hacer un AFN.
-    # for res in listaF:
-    #     #print("Regex: ", res)
-
-    #     # # Creando el AFN.
-    #     automata, lista, diccionario = thompson(res)
-
-    #     automatasAFN.append(automata)
-    #     listasAFN.append(lista)
-    #     diccionariosAFN.append(diccionario)
-
-    
-    # Uniendo los AFNs.
-    #union_AFNs(automatasAFN, listasAFN, diccionariosAFN)
-
-    #print("ListaA: ", listaA)
-
-    # print("ListaF: ", listaF)
-
     regex_final = ""
     alf_final = ""
     lista_temp = []
@@ -288,12 +227,14 @@ with open("exp3.yal", "r") as file:
             print("Hubo un error con la regex")
 
 
-    #print("ListaA: ", listaA)
+    print("ListaA: ", listaA)
 
     # Uniendo todas las expresiones mediante un |.
     expr = "|".join(listaA)
 
-    #print("Expresión unida: ", expr)
+    print("Expresión unida: ", expr)
+
+    reg = evaluar(expr)
 
     # Verificando que la expresión regular no tenga errores.
     bien = deteccion(expr)
